@@ -1,0 +1,35 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var jump = function(nums) {
+    /** 贪心算法
+    let now = 0;
+    let ans = 0;
+    while (now < nums.length - 1) {
+        let right = now + nums[now];
+        if (right >= nums.length - 1) return ans + 1;
+        let nextRight = right;
+        let next = now;
+        for (let i=now+1; i<=right; i++) {
+            if (i + nums[i] > nextRight) {
+                nextRight = i + nums[i];
+                next = i;
+            }
+        }
+        now = next;
+        ans++;
+    }
+    return ans;
+     */
+    //动态规划
+    const n = nums.length;
+    const dp = new Array(n).fill(n-1);
+    dp[0] = 0;
+    for (let i=1; i<n; i++) {
+        for (let j=0; j<i; j++) {
+            if (j + nums[j] >= i) dp[i] = Math.min(dp[i], dp[j]+1);
+        }
+    }
+    return dp[n-1];
+};
